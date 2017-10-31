@@ -5,6 +5,7 @@ POST        /login               controllers.AuthorizationController.login
 
 
 GET         /apps                controllers.AppsController.list
+POST        /apps                controllers.AppsController.create
 
 
 # Map static resources from the /public folder to the /assets URL path

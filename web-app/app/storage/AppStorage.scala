@@ -17,11 +17,11 @@ object AppStorage {
         .execute().actionGet().getHits.getHits
 
     hits.filter(hit => hit.getSource.get("user") == user.email).map(hit => App(
-      hit.getField("name").getValue[String],
-      hit.getField("cpu").getValue[String].toDouble,
-      hit.getField("mem").getValue[String].toDouble,
-      hit.getField("disk").getValue[String].toDouble)
-    ).toList
+      hit.getSource().get("name").asInstanceOf[String],
+      hit.getSource().get("cpu").asInstanceOf[Double],
+      hit.getSource().get("mem").asInstanceOf[Double],
+      hit.getSource().get("disk").asInstanceOf[Double]
+    )).toList
   }
 
   def getApp(user: User, name: String): Option[App] = getApps(user).find(app => app.name == name)

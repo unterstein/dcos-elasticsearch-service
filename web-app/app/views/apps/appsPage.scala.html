@@ -1,0 +1,37 @@
+@(apps: List[models.App], appsForm: Form[AppsController.AppsData])(implicit request: RequestHeader, messages: Messages)
+@import helper._
+
+@mainPage() {
+    @apps.map { app =>
+        <div class="col-lg-12">
+            <div class="well">
+                <h3>@app.name</h3>
+                cpu: @app.cpu<br/>
+                mem: @app.mem<br/>
+                disk: @app.disk<br/>
+            </div>
+        </div>
+    }
+
+    @helper.form(action = routes.AppsController.create(), 'class -> "form-horizontal") {
+        <h2>@Messages("login")</h2>
+        @CSRF.formField
+        <div class="well">
+            <fieldset>
+                <div class="form-group">
+                @helper.inputText(appsForm("name"), 'class -> "form-control")
+                </div>
+                <div class="form-group">
+                @helper.inputText(appsForm("cpu"), 'class -> "form-control")
+                </div>
+                <div class="form-group">
+                @helper.inputText(appsForm("mem"), 'class -> "form-control")
+                </div>
+                <div class="form-group">
+                @helper.inputText(appsForm("disk"), 'class -> "form-control")
+                </div>
+                <button type="submit" class="btn btn-primary">@Messages("create")</button>
+            </fieldset>
+        </div>
+    }
+}

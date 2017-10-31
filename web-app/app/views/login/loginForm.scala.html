@@ -1,11 +1,13 @@
-@(loginForm: Form[AuthorizationController.LoginData])(implicit messages: Messages)
+@(loginForm: Form[AuthorizationController.LoginData])(implicit request: RequestHeader, messages: Messages)
+@import helper._
 
 @helper.form(action = routes.AuthorizationController.login(), 'class -> "form-horizontal") {
     <h2>@Messages("login")</h2>
+    @CSRF.formField
     <div class="well">
         <fieldset>
             <div class="form-group">
-                @helper.inputText(loginForm("name"), 'class -> "form-control")
+                @helper.inputText(loginForm("email"), 'class -> "form-control")
             </div>
             <div class="form-group">
               @helper.inputPassword(loginForm("password"), 'class -> "form-control")

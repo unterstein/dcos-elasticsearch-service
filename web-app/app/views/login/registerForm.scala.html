@@ -1,11 +1,13 @@
-@(registerForm: Form[AuthorizationController.RegisterData])(implicit messages: Messages)
+@(registerForm: Form[AuthorizationController.RegisterData])(implicit request: RequestHeader, messages: Messages)
+@import helper._
 
 @helper.form(action = routes.AuthorizationController.register(), 'class -> "form-horizontal") {
     <h2>@Messages("register")</h2>
+    @CSRF.formField
     <div class="well">
         <fieldset>
             <div class="form-group">
-                @helper.inputText(registerForm("name"), 'class -> "form-control")
+                @helper.inputText(registerForm("email"), 'class -> "form-control")
             </div>
             <div class="form-group">
                 @helper.inputPassword(registerForm("password"), 'class -> "form-control")
@@ -13,7 +15,7 @@
             <div class="form-group">
               @helper.inputPassword(registerForm("password2"), 'class -> "form-control")
             </div>
-            <button type="submit" class="btn btn-primary">@Messages("login")</button>
+            <button type="submit" class="btn btn-primary">@Messages("register")</button>
         </fieldset>
     </div>
 }

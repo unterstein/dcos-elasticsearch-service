@@ -1,4 +1,4 @@
-@(loginForm: Form[AuthorizationController.LoginData], registerForm: Form[AuthorizationController.RegisterData])(implicit messages: Messages)
+@(loginForm: Form[AuthorizationController.LoginData], registerForm: Form[AuthorizationController.RegisterData])(implicit request: RequestHeader, messages: Messages)
 
 @mainPage() {
     <div class="row col-lg-12">

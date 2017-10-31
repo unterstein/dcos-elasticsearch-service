@@ -1,0 +1,12 @@
+@(loginForm: Form[AuthorizationController.LoginData], registerForm: Form[AuthorizationController.RegisterData])(implicit messages: Messages)
+
+@mainPage() {
+    <div class="row col-lg-12">
+        <div class="col-lg-4 col-lg-offset-1">
+            @views.html.login.loginForm(loginForm)
+        </div>
+        <div class="col-lg-4 col-lg-offset-2">
+            @views.html.login.registerForm(registerForm)
+        </div>
+    </div>
+}

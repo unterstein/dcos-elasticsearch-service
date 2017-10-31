@@ -16,7 +16,7 @@ class BrowserSpec extends PlaySpec
 
       go to ("http://localhost:" + port)
 
-      pageSource must include ("Welcome")
+      pageSource must include ("Elasticsearch as a service web app")
     }
   }
 }

@@ -33,9 +33,23 @@ object ESClient {
               .endObject()
           ).execute().actionGet()
     }
+    if (!client.admin().indices().prepareExists(AppStorage.index).execute().actionGet().isExists) {
+      val createResponse = client.admin().indices()
+          .prepareCreate(AppStorage.index)
+          .addMapping(AppStorage.indexType, jsonBuilder()
+              .startObject()
+              .field("properties", Map(
+                "user" -> Map("type" -> "text", "store" -> "yes").asJava,
+                "name" -> Map("type" -> "text", "store" -> "yes").asJava,
+                "cpu" -> Map("type" -> "double", "store" -> "yes").asJava,
+                "mem" -> Map("type" -> "double", "store" -> "yes").asJava,
+                "disk" -> Map("type" -> "double", "store" -> "yes").asJava
+              ).asJava)
+              .endObject()
+          ).execute().actionGet()
+    }
   }
 
-  // FIXME callme
   def onStop(): Unit = {
     client.close()
   }

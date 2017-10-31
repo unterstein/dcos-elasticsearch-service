@@ -5,6 +5,7 @@ import javax.inject._
 import play.api.data.Forms._
 import play.api.data._
 import play.api.mvc._
+import storage.UserStorage
 
 @Singleton
 class AuthorizationController @Inject()(cc: ControllerComponents) extends BaseController(cc) {
@@ -21,8 +22,12 @@ class AuthorizationController @Inject()(cc: ControllerComponents) extends BaseCo
           BadRequest(views.html.login.loginPage(AuthorizationController.loginForm, formWithErrors))
         },
         userData => {
-          //        Redirect(routes.Application.home(id))
-          Ok("ok")
+          UserStorage.storeUser(userData.email, userData.password) match {
+            case None =>
+              BadRequest("muuh")
+            case Some(user) =>
+              Redirect(routes.AppsController.list).withSession(USER_ID -> user.email)
+          }
         }
       )
   }
@@ -34,8 +39,12 @@ class AuthorizationController @Inject()(cc: ControllerComponents) extends BaseCo
           BadRequest(views.html.login.loginPage(formWithErrors, AuthorizationController.registerForm))
         },
         userData => {
-          //        Redirect(routes.Application.home(id))
-          Ok("ok")
+          UserStorage.getUser(userData.email, userData.password) match {
+            case None =>
+              BadRequest("muuh")
+            case Some(user) =>
+              Redirect(routes.AppsController.list).withSession(USER_ID -> user.email)
+          }
         }
       )
   }
@@ -62,5 +71,6 @@ object AuthorizationController {
       "password2" -> nonEmptyText
     )(RegisterData.apply)(RegisterData.unapply)
         .verifying("error.passwordNotMatching", register => register.password == register.password2)
+        .verifying("error.userExists", register => UserStorage.getUser(register.email).isEmpty)
   )
 }

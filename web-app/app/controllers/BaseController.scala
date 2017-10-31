@@ -9,7 +9,7 @@ class BaseController(cc: ControllerComponents) extends AbstractController(cc) {
 
   implicit val messages = messagesApi.preferred(Seq(Lang.defaultLang))
 
-  def AuthenticatedBaseAction(f: => AuthenticatedRequest[AnyContent, User] => Result): EssentialAction = Security.Authenticated(userInfo, onUnauthorized) {
+  def AuthenticatedAction(f: => AuthenticatedRequest[AnyContent, User] => Result): EssentialAction = Security.Authenticated(userInfo, onUnauthorized) {
     user =>
       BaseAction(request => {
         f(new BaseRequest(request, user))
@@ -22,7 +22,7 @@ class BaseController(cc: ControllerComponents) extends AbstractController(cc) {
   }
 
   private def userInfo(request: RequestHeader): Option[User] = {
-    val maybeEmail = request.session.get(AUTH_SESSION)
+    val maybeEmail = request.session.get(USER_ID)
     maybeEmail.map {
       email =>
         // TODO check if mail and password matches
@@ -32,7 +32,7 @@ class BaseController(cc: ControllerComponents) extends AbstractController(cc) {
 
   class BaseRequest(request: Request[AnyContent], user: User) extends AuthenticatedRequest[AnyContent, User](user, request)
 
-  private val AUTH_SESSION = "email"
+  val USER_ID = "email"
 
   private def onUnauthorized(requestHeader: RequestHeader) = Redirect(routes.AuthorizationController.loginPage())
 }

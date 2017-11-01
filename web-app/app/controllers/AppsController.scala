@@ -2,6 +2,7 @@ package controllers
 
 import javax.inject._
 
+import deployment.DeploymentHelper
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.format.Formats._
@@ -25,7 +26,11 @@ class AppsController @Inject()(cc: ControllerComponents) extends BaseController(
           BadRequest(views.html.apps.appsPage(apps, formWithErrors))
         },
         appData => {
-          AppStorage.storeApp(request.user, appData.name, appData.cpu, appData.mem, appData.disk, appData.port)
+          val maybeApp = AppStorage.storeApp(request.user, appData.name, appData.cpu, appData.mem, appData.disk, appData.port)
+          maybeApp.map {
+            app =>
+              DeploymentHelper.deploy(request.user, app)
+          }
           Redirect(routes.AppsController.list).withSession(USER_ID -> request.user.email)
         }
       )

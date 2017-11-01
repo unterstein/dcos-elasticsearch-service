@@ -5,7 +5,6 @@ import models.{App, User}
 import org.elasticsearch.common.xcontent.XContentFactory._
 import org.elasticsearch.index.query.QueryBuilders
 
-
 object AppStorage {
 
   private[storage] val index = "app"
@@ -16,17 +15,17 @@ object AppStorage {
         .setQuery(QueryBuilders.matchQuery("user", user.email))
         .execute().actionGet().getHits.getHits
 
-    hits.filter(hit => hit.getSource.get("user") == user.email).map(hit => App(
-      hit.getId,
-      hit.getSource().get("name").asInstanceOf[String],
-      hit.getSource().get("cpu").asInstanceOf[Double],
-      hit.getSource().get("mem").asInstanceOf[Double],
-      hit.getSource().get("disk").asInstanceOf[Double],
-      hit.getSource().get("port").asInstanceOf[Int],
-    )).toList
+    hits.filter(hit => hit.getSource.get("user") == user.email).map(hit => mapToApp(hit.getId, hit.getSource)).toList
   }
 
-  def getApp(user: User, name: String): Option[App] = getApps(user).find(app => app.name == name)
+  def getApp(id: String): Option[App] = {
+    val app = ESClient.client.prepareGet(index, indexType, id).execute().actionGet()
+    if (app.isExists) {
+      Some(mapToApp(app.getId, app.getSource))
+    } else {
+      None
+    }
+  }
 
   def storeApp(user: User, name: String, cpu: Double, mem: Double, disk: Double, port: Int): Option[App] = {
     val response = ESClient.client.prepareIndex(index, indexType)
@@ -41,6 +40,15 @@ object AppStorage {
               .field("port", port)
               .endObject()
         ).setCreate(true).setId(UUIDHelper.uuid).execute().actionGet()
-    getApp(user, name)
+    getApp(response.getId)
   }
+
+  private def mapToApp(id: String, input: java.util.Map[String, AnyRef]) = App(
+    id,
+    input.get("name").asInstanceOf[String],
+    input.get("cpu").asInstanceOf[Double],
+    input.get("mem").asInstanceOf[Double],
+    input.get("disk").asInstanceOf[Double],
+    input.get("port").asInstanceOf[Int],
+  )
 }

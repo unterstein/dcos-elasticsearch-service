@@ -9,6 +9,7 @@
                 cpu: @app.cpu<br/>
                 mem: @app.mem<br/>
                 disk: @app.disk<br/>
+                port: @app.port<br/>
             </div>
         </div>
     }
@@ -19,16 +20,19 @@
         <div class="well">
             <fieldset>
                 <div class="form-group">
-                @helper.inputText(appsForm("name"), 'class -> "form-control")
+                    @helper.inputText(appsForm("name"), 'class -> "form-control")
                 </div>
                 <div class="form-group">
-                @helper.inputText(appsForm("cpu"), 'class -> "form-control")
+                    @helper.inputText(appsForm("cpu"), 'class -> "form-control")
                 </div>
                 <div class="form-group">
-                @helper.inputText(appsForm("mem"), 'class -> "form-control")
+                    @helper.inputText(appsForm("mem"), 'class -> "form-control")
                 </div>
                 <div class="form-group">
-                @helper.inputText(appsForm("disk"), 'class -> "form-control")
+                  @helper.inputText(appsForm("disk"), 'class -> "form-control")
+                </div>
+                <div class="form-group">
+                    @helper.inputText(appsForm("port"), 'class -> "form-control")
                 </div>
                 <button type="submit" class="btn btn-primary">@Messages("create")</button>
             </fieldset>

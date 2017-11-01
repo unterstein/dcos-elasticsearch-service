@@ -40,6 +40,14 @@ If you don't want to read documentation and a more entertaining (Monkey Islandâ„
 [![Youtube talk](images/youtube.png)](https://www.youtube.com/watch?v=u2mpN2GxfVY)
 
 
+## Please note
+**Please don't consider this conference talk demo as production ready or use it in production.**
+
+If you want to use a hosted elasticsearch, you may want to check out the elastic cloud offering.
+
+[![Elastic Cloud Logo](https://static-www.elastic.co/assets/blt0b22efdd604f9b2f/logo-elastic-cloud-lt.svg)](https://www.elastic.co/cloud/as-a-service)
+
+
 ## Get this demo working on DC/OS
 - You need a running DC/OS cluster to run this demo
 - You have multiple options to spin up a DC/OS cluster

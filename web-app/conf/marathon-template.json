@@ -1,0 +1,41 @@
+{
+  "id":"/{{id}}",
+  "cpus":{{cpu}},
+  "mem":{{mem}},
+  "instances":1,
+  "healthChecks":[
+    {
+      "protocol":"HTTP",
+      "path":"/",
+      "portIndex":0,
+      "timeoutSeconds":10,
+      "gracePeriodSeconds":30,
+      "intervalSeconds":2,
+      "maxConsecutiveFailures":10
+    }
+  ],
+  "container":{
+    "type":"DOCKER",
+    "docker":{
+      "image":"elasticsearch:5.5.2",
+      "network":"BRIDGE",
+      "portMappings":[
+        {
+          "hostPort":0,
+          "containerPort":9200,
+          "protocol":"tcp",
+          "labels":{
+            "VIP_0":"{{id}}:9200"
+          }
+        }
+      ]
+    }
+  },
+  "env":{
+    "ES_JAVA_OPTS":"-Xmx{{memory}}m -Xms{{memory}}m"
+  },
+  "labels":{
+    "HAPROXY_0_PORT": "{{port}}",
+    "HAPROXY_GROUP":"external"
+  }
+}

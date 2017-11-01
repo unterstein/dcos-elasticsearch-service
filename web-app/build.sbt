@@ -14,3 +14,6 @@ libraryDependencies += guice
 libraryDependencies += "org.elasticsearch.client" % "transport" % "5.6.3"
 
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
+libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.6"
+libraryDependencies += "commons-io" % "commons-io" % "2.6"
+libraryDependencies += "org.apache.httpcomponents" % "httpclient" % "4.5.3"

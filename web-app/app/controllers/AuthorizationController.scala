@@ -24,9 +24,10 @@ class AuthorizationController @Inject()(cc: ControllerComponents) extends BaseCo
         userData => {
           UserStorage.storeUser(userData.email, userData.password) match {
             case None =>
-              BadRequest("muuh")
+              // TODO add error message that user already exists or error happened
+              BadRequest(views.html.login.loginPage(AuthorizationController.loginForm, AuthorizationController.registerForm))
             case Some(user) =>
-              Redirect(routes.AppsController.list).withSession(USER_ID -> user.email)
+              Redirect(routes.AppsController.list()).withSession(USER_ID -> user.email)
           }
         }
       )
@@ -41,9 +42,10 @@ class AuthorizationController @Inject()(cc: ControllerComponents) extends BaseCo
         userData => {
           UserStorage.getUser(userData.email, userData.password) match {
             case None =>
-              BadRequest("muuh")
+              // TODO add error message that user already exists or error happened
+              BadRequest(views.html.login.loginPage(AuthorizationController.loginForm, AuthorizationController.registerForm))
             case Some(user) =>
-              Redirect(routes.AppsController.list).withSession(USER_ID -> user.email)
+              Redirect(routes.AppsController.list()).withSession(USER_ID -> user.email)
           }
         }
       )

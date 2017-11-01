@@ -43,7 +43,8 @@ object ESClient {
                 "name" -> Map("type" -> "text", "store" -> "yes").asJava,
                 "cpu" -> Map("type" -> "double", "store" -> "yes").asJava,
                 "mem" -> Map("type" -> "double", "store" -> "yes").asJava,
-                "disk" -> Map("type" -> "double", "store" -> "yes").asJava
+                "disk" -> Map("type" -> "double", "store" -> "yes").asJava,
+                "port" -> Map("type" -> "long", "store" -> "yes").asJava
               ).asJava)
               .endObject()
           ).execute().actionGet()

@@ -1,3 +1,3 @@
 package models
 
-case class App(name: String, cpu: Double, mem: Double, disk: Double)
+case class App(id: String, name: String, cpu: Double, mem: Double, disk: Double, port: Int)

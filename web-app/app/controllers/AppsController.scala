@@ -25,7 +25,7 @@ class AppsController @Inject()(cc: ControllerComponents) extends BaseController(
           BadRequest(views.html.apps.appsPage(apps, formWithErrors))
         },
         appData => {
-          AppStorage.storeApp(request.user, appData.name, appData.cpu, appData.mem, appData.disk)
+          AppStorage.storeApp(request.user, appData.name, appData.cpu, appData.mem, appData.disk, appData.port)
           Redirect(routes.AppsController.list).withSession(USER_ID -> request.user.email)
         }
       )
@@ -34,14 +34,15 @@ class AppsController @Inject()(cc: ControllerComponents) extends BaseController(
 
 object AppsController {
 
-  case class AppsData(name: String, cpu: Double, mem: Double, disk: Double)
+  case class AppsData(name: String, cpu: Double, mem: Double, disk: Double, port: Int)
 
   val appsForm = Form(
     mapping(
       "name" -> nonEmptyText,
       "cpu" -> of(doubleFormat),
       "mem" -> of(doubleFormat),
-      "disk" -> of(doubleFormat)
+      "disk" -> of(doubleFormat),
+      "port" -> of(intFormat)
     )(AppsData.apply)(AppsData.unapply)
   )
 }

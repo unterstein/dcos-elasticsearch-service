@@ -17,16 +17,18 @@ object AppStorage {
         .execute().actionGet().getHits.getHits
 
     hits.filter(hit => hit.getSource.get("user") == user.email).map(hit => App(
+      hit.getId,
       hit.getSource().get("name").asInstanceOf[String],
       hit.getSource().get("cpu").asInstanceOf[Double],
       hit.getSource().get("mem").asInstanceOf[Double],
-      hit.getSource().get("disk").asInstanceOf[Double]
+      hit.getSource().get("disk").asInstanceOf[Double],
+      hit.getSource().get("port").asInstanceOf[Int],
     )).toList
   }
 
   def getApp(user: User, name: String): Option[App] = getApps(user).find(app => app.name == name)
 
-  def storeApp(user: User, name: String, cpu: Double, mem: Double, disk: Double): Option[App] = {
+  def storeApp(user: User, name: String, cpu: Double, mem: Double, disk: Double, port: Int): Option[App] = {
     val response = ESClient.client.prepareIndex(index, indexType)
         .setSource(
           jsonBuilder()
@@ -36,6 +38,7 @@ object AppStorage {
               .field("cpu", cpu)
               .field("mem", mem)
               .field("disk", disk)
+              .field("port", port)
               .endObject()
         ).setCreate(true).setId(UUIDHelper.uuid).execute().actionGet()
     getApp(user, name)

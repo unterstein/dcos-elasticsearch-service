@@ -2,6 +2,7 @@ package storage
 
 import java.net.InetAddress
 
+import helper.EnvironmentHelper
 import org.elasticsearch.client.Client
 import org.elasticsearch.common.settings.Settings
 import org.elasticsearch.common.transport.InetSocketTransportAddress
@@ -14,9 +15,10 @@ object ESClient {
   private val settings = Settings.builder() /*.put("cluster.name", "myClusterName")*/ .build()
 
 
-  // FIXME make this configurable
   val client: Client = new PreBuiltTransportClient(settings)
-      .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300))
+      .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(
+        EnvironmentHelper.getConfiguration("ELASTICSEARCH_URL", "localhost")), 9300)
+      )
 
   onStart()
 

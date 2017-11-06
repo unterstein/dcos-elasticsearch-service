@@ -1,5 +1,6 @@
 package deployment
 
+import helper.EnvironmentHelper
 import models.{App, User}
 import org.apache.commons.io.IOUtils
 import org.apache.http.client.methods.HttpPost
@@ -10,9 +11,9 @@ object DeploymentHelper {
   private val template = IOUtils.toString(getClass.getClassLoader.getResourceAsStream("marathon-template.json"), "UTF-8")
   private val client = HttpClients.createDefault()
 
+  private val marathonUrl = EnvironmentHelper.getConfiguration("MARATHON_URL", "http://localhost:8080/")
+
   def deploy(user: User, app: App): DeploymentResult = {
-    // FIXME sys.env()
-    val marathonUrl = "http://localhost:8080/"
     val post = new HttpPost(marathonUrl + "/v2/apps")
     post.setHeader("Content-Type", "application/json")
     post.setEntity(new StringEntity(rendeTemplate(user, app)))

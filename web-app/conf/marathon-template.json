@@ -1,5 +1,5 @@
 {
-  "id":"/{{id}}",
+  "id":"/userelasticsearch/{{id}}",
   "cpus":{{cpu}},
   "mem":{{mem}},
   "instances":1,
@@ -24,8 +24,18 @@
           "hostPort":0,
           "containerPort":9200,
           "protocol":"tcp",
+          "name": "http",
           "labels":{
             "VIP_0":"{{id}}:9200"
+          }
+        },
+        {
+          "hostPort":0,
+          "containerPort":9300,
+          "protocol":"tcp",
+          "name": "transport",
+          "labels":{
+            "VIP_0":"{{id}}:9300"
           }
         }
       ]

@@ -10,6 +10,7 @@ import scala.concurrent.Future
 @Singleton
 class InitService @Inject()(appLifecycle: ApplicationLifecycle) {
 
+  // FIXME for tests, elasticsearch must be up and running
   ESClient.onStart()
 
   appLifecycle.addStopHook { () =>

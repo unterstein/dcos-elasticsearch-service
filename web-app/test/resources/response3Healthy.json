@@ -1,0 +1,168 @@
+{
+  "app": {
+    "id": "/test",
+    "backoffFactor": 1.15,
+    "backoffSeconds": 1,
+    "container": {
+      "type": "DOCKER",
+      "docker": {
+        "forcePullImage": false,
+        "image": "nginx",
+        "parameters": [],
+        "privileged": false
+      },
+      "volumes": [],
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 0,
+          "labels": {},
+          "name": "http",
+          "protocol": "tcp",
+          "servicePort": 10001
+        }
+      ]
+    },
+    "cpus": 1,
+    "disk": 0,
+    "executor": "",
+    "healthChecks": [
+      {
+        "gracePeriodSeconds": 30,
+        "ignoreHttp1xx": false,
+        "intervalSeconds": 10,
+        "maxConsecutiveFailures": 10,
+        "path": "/",
+        "portIndex": 0,
+        "protocol": "HTTP",
+        "timeoutSeconds": 10,
+        "delaySeconds": 15
+      }
+    ],
+    "instances": 3,
+    "labels": {},
+    "maxLaunchDelaySeconds": 3600,
+    "mem": 128,
+    "gpus": 0,
+    "networks": [
+      {
+        "mode": "container/bridge"
+      }
+    ],
+    "requirePorts": false,
+    "upgradeStrategy": {
+      "maximumOverCapacity": 1,
+      "minimumHealthCapacity": 1
+    },
+    "version": "2017-11-11T11:38:55.874Z",
+    "versionInfo": {
+      "lastScalingAt": "2017-11-11T11:38:55.874Z",
+      "lastConfigChangeAt": "2017-11-11T11:38:55.874Z"
+    },
+    "killSelection": "YOUNGEST_FIRST",
+    "unreachableStrategy": {
+      "inactiveAfterSeconds": 0,
+      "expungeAfterSeconds": 0
+    },
+    "tasksStaged": 0,
+    "tasksRunning": 3,
+    "tasksHealthy": 3,
+    "tasksUnhealthy": 0,
+    "deployments": [],
+    "tasks": [
+      {
+        "ipAddresses": [
+          {
+            "ipAddress": "172.17.0.2",
+            "protocol": "IPv4"
+          }
+        ],
+        "stagedAt": "2017-11-11T11:38:55.909Z",
+        "state": "TASK_RUNNING",
+        "ports": [
+          25141,
+          25142
+        ],
+        "startedAt": "2017-11-11T11:38:56.816Z",
+        "version": "2017-11-11T11:38:55.874Z",
+        "id": "test.e668e579-c6d4-11e7-a712-f2272e7e0262",
+        "appId": "/test",
+        "slaveId": "c5c02761-041e-49ea-a866-1e19c656f8c5-S1",
+        "host": "10.0.3.83",
+        "healthCheckResults": [
+          {
+            "alive": true,
+            "consecutiveFailures": 0,
+            "firstSuccess": "2017-11-11T11:39:00.926Z",
+            "lastFailure": null,
+            "lastSuccess": "2017-11-11T11:39:30.967Z",
+            "lastFailureCause": null,
+            "instanceId": "test.marathon-e668e579-c6d4-11e7-a712-f2272e7e0262"
+          }
+        ]
+      },
+      {
+        "ipAddresses": [
+          {
+            "ipAddress": "172.17.0.2",
+            "protocol": "IPv4"
+          }
+        ],
+        "stagedAt": "2017-11-11T11:38:55.911Z",
+        "state": "TASK_RUNNING",
+        "ports": [
+          2090,
+          2091
+        ],
+        "startedAt": "2017-11-11T11:39:03.404Z",
+        "version": "2017-11-11T11:38:55.874Z",
+        "id": "test.e6690c8a-c6d4-11e7-a712-f2272e7e0262",
+        "appId": "/test",
+        "slaveId": "c5c02761-041e-49ea-a866-1e19c656f8c5-S0",
+        "host": "10.0.2.130",
+        "healthCheckResults": [
+          {
+            "alive": true,
+            "consecutiveFailures": 0,
+            "firstSuccess": "2017-11-11T11:39:10.931Z",
+            "lastFailure": null,
+            "lastSuccess": "2017-11-11T11:39:30.967Z",
+            "lastFailureCause": null,
+            "instanceId": "test.marathon-e6690c8a-c6d4-11e7-a712-f2272e7e0262"
+          }
+        ]
+      },
+      {
+        "ipAddresses": [
+          {
+            "ipAddress": "172.17.0.3",
+            "protocol": "IPv4"
+          }
+        ],
+        "stagedAt": "2017-11-11T11:38:55.906Z",
+        "state": "TASK_RUNNING",
+        "ports": [
+          29648,
+          29649
+        ],
+        "startedAt": "2017-11-11T11:38:56.854Z",
+        "version": "2017-11-11T11:38:55.874Z",
+        "id": "test.e6684938-c6d4-11e7-a712-f2272e7e0262",
+        "appId": "/test",
+        "slaveId": "c5c02761-041e-49ea-a866-1e19c656f8c5-S1",
+        "host": "10.0.3.83",
+        "healthCheckResults": [
+          {
+            "alive": true,
+            "consecutiveFailures": 0,
+            "firstSuccess": "2017-11-11T11:39:00.926Z",
+            "lastFailure": null,
+            "lastSuccess": "2017-11-11T11:39:30.967Z",
+            "lastFailureCause": null,
+            "instanceId": "test.marathon-e6684938-c6d4-11e7-a712-f2272e7e0262"
+          }
+        ]
+      }
+    ]
+  }
+}

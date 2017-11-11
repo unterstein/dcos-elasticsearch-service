@@ -35,6 +35,9 @@ class DeploymentSpec extends PlaySpec {
           )
         )
       expected must equal(appStatus)
+      appStatus.isHealthy must equal(true)
+      val firstInstance = appStatus.instances.head
+      firstInstance.namedPorts must equal(Map("http" -> 25141, "transport" -> 25142))
     }
   }
 }

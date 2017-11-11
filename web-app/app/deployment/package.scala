@@ -11,7 +11,10 @@ object ServerStatusFailed extends ServerStatus
 
 case class DeploymentResult(status: ServerStatus, deploymentId: Option[String])
 
-case class AppStatus(id: String, tasksRunning: Int, tasksHealthy: Int, tasksUnhealthy: Int, instances: Seq[InstanceStatus])
+case class AppStatus(id: String, tasksRunning: Int, tasksHealthy: Int, tasksUnhealthy: Int, instances: Seq[InstanceStatus]) {
+
+  def isHealthy: Boolean = instances.forall(_.isHealthy)
+}
 
 case class InstanceStatus(id: String, healthCheckResults: Seq[HealthCheckResult], hostname: String, ports: Seq[Int]) {
 

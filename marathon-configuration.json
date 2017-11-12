@@ -36,7 +36,7 @@
          ],
          "env":{
             "LOGSTASH_DESTINATION":"logstash.marathon.l4lb.thisdcos.directory:5000",
-            "ELASTICSEARCH_URL":"http://elasticsearch.marathon.l4lb.thisdcos.directory:9200",
+            "ELASTICSEARCH_URL":"elasticsearch.marathon.l4lb.thisdcos.directory",
             "ELASTICSEARCH_NAME":"datastore"
          },
          "upgradeStrategy":{
@@ -90,7 +90,7 @@
          "cpus":2,
          "mem":4096,
          "instances":1,
-         "cmd":"/usr/local/bin/docker-entrypoint.sh -e 'discovery.type=single-node' -e 'cluster.name=datastore' -e 'ES_JAVA_OPTS=-Xmx3072m -Xms3072m' -e 'transport.host=0.0.0.0'"
+         "cmd":"/docker-entrypoint.sh -Ediscovery.type=single-node -Ecluster.name=datastore -Etransport.host=0.0.0.0",
          "healthChecks":[
             {
                "protocol":"HTTP",

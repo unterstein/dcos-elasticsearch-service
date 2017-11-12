@@ -91,6 +91,9 @@
          "mem":4096,
          "instances":1,
          "cmd":"/docker-entrypoint.sh -Ediscovery.type=single-node -Ecluster.name=datastore -Etransport.host=0.0.0.0",
+         "env":{
+            "ES_JAVA_OPTS":"-Xms3500m -Xmx3500m"
+         },
          "healthChecks":[
             {
                "protocol":"HTTP",

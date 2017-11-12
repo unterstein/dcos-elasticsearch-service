@@ -1,5 +1,5 @@
 {
-  "id":"/userelasticsearch/{{id}}",
+  "id":"/eaas/es/{{id}}",
   "cpus":{{cpu}},
   "mem":{{mem}},
   "instances":1,

@@ -1,0 +1,38 @@
+version: '2'
+services:
+
+  service:
+    image: unterstein/eaas-web:latest
+    ports:
+      - "9000:9000"
+    depends_on:
+      - elasticsearch
+      - logstash
+    environment:
+      - LOGSTASH_DESTINATION=logstash:5000
+      - ELASTICSEARCH_URL=elasticsearch
+      - ELASTICSEARCH_NAME=datastore
+      - WAIT_FOR_ELASTICSEARCH=true
+
+  elasticsearch:
+    image: elasticsearch:5.5.2
+    volumes:
+      - /usr/share/elasticsearch/data
+    command: "-Ediscovery.type=single-node -Ecluster.name=datastore -Etransport.host=0.0.0.0"
+    ports:
+      - "9200:9200"
+
+  logstash:
+    image: logstash:5.5.2
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    command: "-e 'input { tcp { port => 5000 codec => json } } output { elasticsearch { hosts => \"http://elasticsearch:9200\" } }'"
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    image: kibana:5.5.2
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200

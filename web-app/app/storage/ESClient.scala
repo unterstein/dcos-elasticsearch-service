@@ -17,6 +17,11 @@ object ESClient {
       .build()
 
 
+  // FIXME
+  if (EnvironmentHelper.getConfiguration("WAIT_FOR_ELASTICSEARCH", "false") == "true") {
+    Thread.sleep(5000L)
+  }
+
   val client: Client = new PreBuiltTransportClient(settings)
       .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(
         EnvironmentHelper.getConfiguration("ELASTICSEARCH_URL", "localhost")), 9300)

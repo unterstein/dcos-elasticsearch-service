@@ -12,7 +12,9 @@ import org.elasticsearch.transport.client.PreBuiltTransportClient
 import scala.collection.JavaConverters._
 
 object ESClient {
-  private val settings = Settings.builder() /*.put("cluster.name", "myClusterName")*/ .build()
+  private val settings = Settings.builder()
+      .put("cluster.name", EnvironmentHelper.getConfiguration("ELASTICSEARCH_NAME", "elasticsearch"))
+      .build()
 
 
   val client: Client = new PreBuiltTransportClient(settings)
